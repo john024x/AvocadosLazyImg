@@ -1,21 +1,24 @@
-import { registerImage } from "./lazy.js";
-import { createImageNodes } from "./utils.js";
+import { registerImg } from "./lazy.js";
 
-// Cargue las imagenes existentes cuando cargue la página
-const allImages = document.querySelectorAll("img[data-src]");
-allImages.forEach(registerImage);
+const random = () => Math.floor(Math.random()*(122-1)) + 1;
+console.log('Happy hacking :)');
+const createImgNode = () => {
+    const container = document.createElement('div')
+    container.className = "p-4";
 
-// Agregar nuevas imagenes
-const imageContainer = document.querySelector("#images");
-const button = document.querySelector("button[type='submit']");
-button.addEventListener("click", () => {
-  const [node, image] = createImageNodes();
-  registerImage(image);
-  imageContainer.append(node);
-});
-
-// Limpiar
-const clean = document.querySelector("button[type='reset']");
-clean.addEventListener("click", () => {
-  imageContainer.innerHTML = "";
-});
+    const img = document.createElement('img')
+    img.className ="mx-auto";
+    img.width = "320";
+    img.dataset.src = `https://randomfox.ca//images/${random()}.jpg`;
+    container.appendChild(img);
+    return container;
+}
+const newImg = createImgNode();
+const mountNode = document.getElementById('imagenes')
+const addButton = document.querySelector("#addImg");
+const AddImage = () => {
+    const newImg = createImgNode();
+    mountNode.append(newImg);
+    registerImg(newImg);
+}
+addButton.addEventListener("click", AddImage);
